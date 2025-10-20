@@ -1,4 +1,5 @@
 import Hero from './components/Hero'
+import HowItWorks from './components/HowItWorks'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       </header>
 
       <Hero />
+      <HowItWorks />
     </div>
   )
 }
