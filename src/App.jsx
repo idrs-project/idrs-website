@@ -1,5 +1,6 @@
 import Hero from './components/Hero'
 import HowItWorks from './components/HowItWorks'
+import Footer from './components/Footer'
 
 function App() {
 const howItWorksSteps = [
@@ -37,6 +38,7 @@ const howItWorksSteps = [
 
       <Hero />
       <HowItWorks steps={howItWorksSteps} />
+      <Footer />
     </div>
   )
 }
