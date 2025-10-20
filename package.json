@@ -1,0 +1,31 @@
+{
+  "name": "idrs-website",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idrs-project/idrs-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/idrs-project/idrs-website/issues"
+  },
+  "homepage": "https://github.com/idrs-project/idrs-website#readme",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react-swc": "^3.7.2",
+    "sass": "^1.83.0",
+    "vite": "^5.4.11"
+  }
+}
