@@ -16,10 +16,12 @@ const throttle = (func, limit) => {
 function HowItWorks({ steps }) {
   const [openStep, setOpenStep] = useState(-1) // -1 means none open initially
   const sectionRef = useRef(null)
+  const isScrollingProgrammatically = useRef(false)
+  const scrollTimeoutRef = useRef(null)
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!sectionRef.current) return
+      if (!sectionRef.current || isScrollingProgrammatically.current) return
 
       const section = sectionRef.current
       const rect = section.getBoundingClientRect()
@@ -54,16 +56,18 @@ function HowItWorks({ steps }) {
       const newStep = Math.max(-1, Math.min(currentStep, totalSteps - 1))
       
       // Update open step if it changed
-      if (newStep !== openStep) {
-        setOpenStep(newStep)
-        
-        // Update URL hash
-        if (newStep >= 0) {
-          window.history.replaceState(null, '', `#${steps[newStep].id}`)
-        } else {
-          window.history.replaceState(null, '', '#how-it-works')
+      setOpenStep(prevStep => {
+        if (newStep !== prevStep) {
+          // Update URL hash
+          if (newStep >= 0) {
+            window.history.replaceState(null, '', `#${steps[newStep].id}`)
+          } else {
+            window.history.replaceState(null, '', '#how-it-works')
+          }
+          return newStep
         }
-      }
+        return prevStep
+      })
     }
 
     // Create throttled version of scroll handler (fires at most once every 100ms)
@@ -84,11 +88,72 @@ function HowItWorks({ steps }) {
     return () => {
       window.removeEventListener('scroll', throttledHandleScroll)
     }
-  }, [openStep, steps])
+  }, [steps])
 
   const handleStepClick = (index) => {
+    if (!sectionRef.current) return
+    
+    // Clear any existing timeout
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current)
+    }
+    
+    // Set flag to prevent scroll handler from interfering
+    isScrollingProgrammatically.current = true
+    
     setOpenStep(index)
     window.history.pushState(null, '', `#${steps[index].id}`)
+    
+    // Calculate the scroll position for this step
+    // Each step should be roughly at stepProgress = index + 1
+    const section = sectionRef.current
+    const rect = section.getBoundingClientRect()
+    const sectionHeight = rect.height
+    const windowHeight = window.innerHeight
+    const scrollRange = sectionHeight - windowHeight
+    
+    // Calculate the target progress for this step
+    // We want the step to be active, so we target the middle of its range
+    const totalSteps = steps.length
+    const targetStepProgress = index + 1.5 // Middle of the step's range
+    const targetAdjustedProgress = targetStepProgress / (totalSteps + 1)
+    const targetProgress = (targetAdjustedProgress * 0.9) + 0.1 // Reverse the adjustment
+    
+    // Calculate the scroll position
+    const targetScrollOffset = targetProgress * scrollRange
+    const currentScrollY = window.scrollY
+    const sectionTop = rect.top + currentScrollY
+    const targetScrollY = sectionTop + targetScrollOffset
+    
+    // Use requestAnimationFrame to ensure state has updated before scrolling
+    requestAnimationFrame(() => {
+      // Smooth scroll to the target position
+      window.scrollTo({
+        top: targetScrollY,
+        behavior: 'smooth'
+      })
+      
+      // Re-enable scroll handler after smooth scroll completes
+      // Monitor for scroll end more accurately
+      let lastScrollY = window.scrollY
+      let scrollCheckCount = 0
+      
+      const checkScrollEnd = () => {
+        const currentY = window.scrollY
+        if (Math.abs(currentY - lastScrollY) < 1 || scrollCheckCount > 20) {
+          // Scroll has ended or max checks reached
+          isScrollingProgrammatically.current = false
+          scrollTimeoutRef.current = null
+        } else {
+          lastScrollY = currentY
+          scrollCheckCount++
+          scrollTimeoutRef.current = setTimeout(checkScrollEnd, 50)
+        }
+      }
+      
+      // Start checking after a brief delay
+      scrollTimeoutRef.current = setTimeout(checkScrollEnd, 100)
+    })
   }
 
   return (
