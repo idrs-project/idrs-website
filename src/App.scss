@@ -17,6 +17,17 @@ $font-secondary: 'Inter', sans-serif;
   box-sizing: border-box;
 }
 
+// Custom text selection color
+::selection {
+  background: rgba($color-gold, 0.15);
+  color: $color-white;
+}
+
+::-moz-selection {
+  background: rgba($color-gold, 0.15);
+  color: $color-white;
+}
+
 body {
   font-family: $font-secondary;
   background: $color-black;
