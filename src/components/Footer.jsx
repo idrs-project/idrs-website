@@ -1,4 +1,26 @@
 function Footer() {
+  const addToWallet = async () => {
+    try {
+      const wasAdded = await window.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address: '0x1d25EEEEE9b61FE86cFF35b0855a0c5ac20a5FEb',
+            symbol: 'IDRS',
+            decimals: 18,
+          },
+        },
+      })
+      
+      if (wasAdded) {
+        console.log('IDRS token added to wallet!')
+      }
+    } catch (error) {
+      console.error('Error adding token to wallet:', error)
+    }
+  }
+
   return (
     <footer className="footer">
       <div className="footer-content">
@@ -38,6 +60,18 @@ function Footer() {
           <h3 className="footer-heading">CONTACT</h3>
           <div className="footer-links">
             <a href="mailto:contact@idrs.group" className="footer-link">contact@idrs.group</a>
+          </div>
+        </div>
+
+        <div className="footer-section">
+          <h3 className="footer-heading">CONTRACT</h3>
+          <div className="footer-links">
+            <a href="https://etherscan.io/address/0x1d25EEEEE9b61FE86cFF35b0855a0c5ac20a5FEb" target="_blank" rel="noopener noreferrer" className="footer-link footer-contract">
+              0x1d25EEEEE9b61FE86cFF35b0855a0c5ac20a5FEb
+            </a>
+            <button onClick={addToWallet} className="footer-add-wallet-btn">
+              Add to Wallet
+            </button>
           </div>
         </div>
       </div>
