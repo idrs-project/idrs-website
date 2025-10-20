@@ -176,20 +176,27 @@ body {
 }
 
 // How it Works Section
-.how-it-works {
+.how-it-works-scroll-container {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  // Tall container: 300vh gives us plenty of scroll range
+  min-height: 300vh;
   width: 100%;
+  
+  .how-it-works-sticky-wrapper {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
   
   .how-it-works-content {
     display: flex;
     width: 100%;
     height: 100%;
-    min-height: 100vh;
     
     .how-it-works-left {
       flex: 1;
