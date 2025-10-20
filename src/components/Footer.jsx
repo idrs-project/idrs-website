@@ -33,6 +33,13 @@ function Footer() {
             <a href="#cookies" className="footer-link">Cookie Policy</a>
           </div>
         </div>
+
+        <div className="footer-section">
+          <h3 className="footer-heading">CONTACT</h3>
+          <div className="footer-links">
+            <a href="mailto:contact@idrs.group" className="footer-link">contact@idrs.group</a>
+          </div>
+        </div>
       </div>
 
       <div className="footer-bottom">
