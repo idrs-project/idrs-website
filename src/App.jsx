@@ -2,26 +2,26 @@ import Hero from './components/Hero'
 import HowItWorks from './components/HowItWorks'
 
 function App() {
-  const howItWorksSteps = [
-    {
-      id: 'deposit',
-      number: '1',
-      title: 'Deposit any underlying token',
-      description: 'Deserunt et molestiae dolores dolorum in officia consequatur. Enim quasi est magni repellendus quo et. Consequuntur magni eligendi est cum vel culpa qui'
-    },
-    {
-      id: 'receive',
-      number: '2',
-      title: 'Receive IDRS token',
-      description: 'Exchange your deposited tokens for IDRS tokens at the current exchange rate. Your tokens are now liquid and ready to use across multiple chains.'
-    },
-    {
-      id: 'trade',
-      number: '3',
-      title: 'Trade, stake, and earn APY',
-      description: 'Use your IDRS tokens across the ecosystem. Trade on DEXs, provide liquidity, stake for rewards, or simply hold as a stable store of value backed by gold.'
-    }
-  ]
+const howItWorksSteps = [
+	{
+		id: 'deposit',
+		number: '1',
+		title: 'Deposit any underlying token',
+		description: 'Users can deposit PAXG into the Ethereum mainnet contract to begin their journey. Simply connect your wallet and transfer your gold-backed tokens securely to the IDRS smart contract.'
+	},
+	{
+		id: 'receive',
+		number: '2',
+		title: 'Receive IDRS token',
+		description: 'Exchange your deposited tokens for IDRS tokens at the current exchange rate. Your tokens are now liquid and ready to use across multiple chains.'
+	},
+	{
+		id: 'trade',
+		number: '3',
+		title: 'Trade, stake, and earn APY',
+		description: 'Use your IDRS tokens across the ecosystem. Trade on DEXs, provide liquidity, stake for rewards, or simply hold as a stable store of value backed by gold.'
+	}
+]
 
   return (
     <div className="homepage">
